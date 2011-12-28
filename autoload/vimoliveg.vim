@@ -1,4 +1,4 @@
-" Parser compiled on Wed 28 Dec 2011 08:06:06 PM CST,
+" Parser compiled on Thu 29 Dec 2011 06:54:41 AM CST,
 " with VimPEG v0.2 and VimPEG Compiler v0.1
 " from "vimoliveg.vimpeg"
 " with the following grammar:
@@ -16,7 +16,7 @@
 " extag      ::=  'ex:'
 " tag1       ::=  vimtag | vitag
 " tag2       ::=  tag1 | extag
-" leader1    ::=  (ospace ltext)? space tag2
+" leader1    ::=  (ospace lotext)* space tag2
 " leader2    ::=  tag1
 " leader     ::=  leader1 | leader2
 " modeline1  ::=  leader ospace m1_options colon? ospace
@@ -26,7 +26,7 @@
 " vers       ::=  comp num | num
 " comp       ::=  '<' | '=' | '>'
 " num        ::=  '\d\{3}'
-" ltext      ::=  '\S\+\%(\s\+\%(vi\|vim\%(\d\{3}\)\?\|ex\):\)\@='
+" lotext     ::=  !tag2 '\S\+'
 " totext     ::=  '.*'
 " ospace     ::=  '\s*'
 " space      ::=  '\s\+'
@@ -53,7 +53,7 @@ call s:p.or(['vimtag', 'vitag'],
       \{'id': 'tag1'})
 call s:p.or(['tag1', 'extag'],
       \{'id': 'tag2'})
-call s:p.and([s:p.maybe_one(s:p.and(['ospace', 'ltext'])), 'space', 'tag2'],
+call s:p.and([s:p.maybe_many(s:p.and(['ospace', 'lotext'])), 'space', 'tag2'],
       \{'id': 'leader1'})
 call s:p.and(['tag1'],
       \{'id': 'leader2'})
@@ -71,8 +71,8 @@ call s:p.or([s:p.e('<'), s:p.e('='), s:p.e('>')],
       \{'id': 'comp'})
 call s:p.e('\d\{3}',
       \{'id': 'num'})
-call s:p.e('\S\+\%(\s\+\%(vi\|vim\%(\d\{3}\)\?\|ex\):\)\@=',
-      \{'id': 'ltext'})
+call s:p.and([s:p.not_has('tag2'), s:p.e('\S\+')],
+      \{'id': 'lotext'})
 call s:p.e('.*',
       \{'id': 'totext'})
 call s:p.e('\s*',
