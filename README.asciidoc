@@ -3,5 +3,22 @@ ViMoLiVe
 
 Vim Mode Line Verifier
 
+Usage
+-----
+
+The command:
+
+  :echo ValidateModelines()
+
+Will show a list of valid modelines in the current file. Invalid lines are
+omitted from the output.
+
+This wants for a more... user-friendly and useful interface. Suggestions
+welcome.
+
+There is also a function called ++VerifyModeline(line)++ which returns a string
+indicating whether the supplied line is a valid modeline or not. The first
+character of the returned string is ++1++ if it is a valid modeline and ++0++
+if it is not. Again, horrendous and improvements welcomed.
 
 Built with https://github.com/dahu/Vimpeg[]
