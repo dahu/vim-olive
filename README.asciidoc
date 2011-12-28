@@ -3,7 +3,5 @@ ViMoLiVe
 
 Vim Mode Line Verifier
 
-Requirements
-------------
 
-* https://github.com/dahu/Vimpeg[]
+Built with https://github.com/dahu/Vimpeg[]

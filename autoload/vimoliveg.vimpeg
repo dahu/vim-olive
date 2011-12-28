@@ -11,7 +11,7 @@ vimtag     ::=  'vim' vers? ':'
 extag      ::=  'ex:'
 tag1       ::=  vimtag | vitag
 tag2       ::=  tag1 | extag
-leader1    ::=  lotext space tag2
+leader1    ::=  (ospace ltext)? space tag2
 leader2    ::=  tag1
 leader     ::=  leader1 | leader2
 modeline1  ::=  leader ospace m1_options colon? ospace
@@ -21,7 +21,7 @@ modeline   ::=  '^' (modeline2 | modeline1) '$'
 vers       ::=  comp num | num
 comp       ::=  '<' | '=' | '>'
 num        ::=  '\d\{3}'
-lotext     ::=  '\S*'
+ltext      ::=  '\S\+\%(\s\+\%(vi\|vim\%(\d\{3}\)\?\|ex\):\)\@='
 totext     ::=  '.*'
 ospace     ::=  '\s*'
 space      ::=  '\s\+'
@@ -35,4 +35,4 @@ tag_opt    ::=  '[a-z]\+'
 val_opt    ::=  tag_opt assignment
 assignment ::=  '\s*=' !'\s' value
 value      ::=  ('\\:' | !'\\' '[^ :]')+
-colons     ::=  colon+ ospace
+colons     ::=  colon* ospace
